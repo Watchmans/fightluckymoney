@@ -15,7 +15,7 @@ import com.dreamcoding.administrator.fightluckymoney.interf.UIOperation;
  */
 public abstract class BaseFragment extends Fragment implements UIOperation {
 
-    protected BaseActivity mActivity;
+    protected BaseSettingActivity mActivity;
 
     /**
      * Fragment显示的界面视图
@@ -26,7 +26,7 @@ public abstract class BaseFragment extends Fragment implements UIOperation {
     public void onAttach(Context context) {
         super.onAttach(context);
         // 获取管理Fragment的Activity
-        mActivity = (BaseActivity) getActivity();
+        mActivity = (BaseSettingActivity) getActivity();
     }
 
 
@@ -53,6 +53,13 @@ public abstract class BaseFragment extends Fragment implements UIOperation {
             }
         }
         return mRoot;
+    }
+
+    /**
+     * 设置界面标题
+     */
+    public void setPageTitle(String title) {
+        mActivity.setPageTitle(title);
     }
 
     /**

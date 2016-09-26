@@ -34,6 +34,7 @@ public class QianghongbaoFragment extends BaseFragment{
         pagerSlidingTabStrip = findView(R.id.page_tabs);
         vp_qianghongbao = findView(R.id.vp_qianghongbao);
 
+        //初始化Fragment
         initFragments();
         if(qianghongbaoAdapter==null){
             qianghongbaoAdapter = new QianghongbaoAdapter(getChildFragmentManager());
@@ -45,6 +46,7 @@ public class QianghongbaoFragment extends BaseFragment{
         qianghongbaoAdapter.addFragments(fragments);
         //pagerSlidingTabStrip对viewpager进行绑定
         pagerSlidingTabStrip.setViewPager(vp_qianghongbao);
+        //初始化滑动标签
         initTab();
         //初始化Viewpager
         vp_qianghongbao.setCurrentItem(0);

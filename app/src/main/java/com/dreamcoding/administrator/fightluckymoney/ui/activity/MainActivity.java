@@ -19,15 +19,15 @@ import android.widget.TextView;
 
 import com.dreamcoding.administrator.fightluckymoney.R;
 import com.dreamcoding.administrator.fightluckymoney.base.BaseActivity;
+import com.dreamcoding.administrator.fightluckymoney.base.BaseSettingActivity;
 import com.dreamcoding.administrator.fightluckymoney.ui.MainTab;
 
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends BaseSettingActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private FragmentTabHost mTabHost;
-    private FrameLayout mFltRealcontent;
 
 
     @Override
@@ -45,6 +45,16 @@ public class MainActivity extends BaseActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+
+    /**
+     * 钩子方法，不显示返回
+     * @return
+     */
+    @Override
+    protected boolean isShowBack() {
+        return false;
     }
 
     @Override
@@ -105,7 +115,6 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        mFltRealcontent = findView(R.id.flt_realcontent);
         mTabHost = findView(android.R.id.tabhost);
 
         //初始化底部标签

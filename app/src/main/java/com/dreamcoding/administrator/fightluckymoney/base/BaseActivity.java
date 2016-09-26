@@ -14,41 +14,33 @@ import com.dreamcoding.administrator.fightluckymoney.interf.UIOperation;
 /**
  * Created by Administrator on 2016/9/21 0021 下午 11:47.
  */
-public abstract class BaseActivity extends AppCompatActivity implements UIOperation {
+public abstract class BaseActivity extends AppCompatActivity{
 
-    private TextView tvTitle;
-    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //每个Activity中的生命周期的onCreate方法
+        MyApplication.activityCreateStatistics(this);
+
         // 去掉界面标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(getLayoutRes());
 
-        /*// android.R.id.content系统的一个父控件，Activity的布局文件会作为子控件添加到该控件中
-        View view = findViewById(android.R.id.content);
-        // 查找一个布局中所有的按钮(Button或ImageButton)并设置点击事件
-        Utils.findButtonAndSetListener(view, this);*/
-
-        //初始话toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        initView();
-        initListener();
-        initData();
     }
 
-    /**
-     * 设置界面标题
-     */
-    public void setPageTitle(String title) {
-        tvTitle = findView(R.id.tv_title);
-        if (tvTitle != null) {
-            tvTitle.setText(title);
-        }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.activityResumeStatistics(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyApplication.activityPauseStatistics(this);
+    }
+
 
     /**
      * 查找子控件，可省强转
@@ -62,16 +54,5 @@ public abstract class BaseActivity extends AppCompatActivity implements UIOperat
         Global.showToast(text);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_back:    // 点击标题栏的返回按钮
-                finish();
-                break;
-            default:
-                onClick(v, v.getId());
-                break;
-        }
-    }
 
 }
