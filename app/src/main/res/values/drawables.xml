@@ -1,0 +1,8 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_menu_loginOrregiest" type="drawable">@drawable/login_or_regiest</item>
+    <item name="ic_menu_notice" type="drawable">@drawable/notice</item>
+    <item name="ic_menu_about" type="drawable">@drawable/about</item>
+    <item name="ic_menu_setting" type="drawable">@drawable/setting</item>
+    <item name="ic_menu_share" type="drawable">@drawable/share</item>
+    <item name="ic_menu_feedback" type="drawable">@drawable/feedback</item>
+</resources>

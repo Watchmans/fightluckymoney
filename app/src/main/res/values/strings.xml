@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">抢红包平台</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--以下为侧滑菜单-->
+        <string name="sideslipping_menu_loginOrregiest">注册或登录</string>
+        <string name="sideslipping_menu_notice">公告</string>
+        <string name="sideslipping_memu_about">关于我们</string>
+        <string name="sideslipping_memu_setting">设置</string>
+
+        <!--以下为交流项-->
+        <string name="sideslipping_menu_share">分享</string>
+        <string name="sideslipping_menu_feedback">反馈</string>
+
+        <!--侧滑菜单的头部-->
+        <string name="slideslipping_head_username">用户名</string>
+        <string name="slideslipping_head_login_date">登录时间</string>
+    <!--侧滑菜单-->
+
+
+    <!--底部tabhost-->
+    <string name="main_tab_qianghongbao">抢红包</string>
+    <string name="main_tab_flow">流量</string>
+    <string name="main_tab_name_server">服务</string>
+    <string name="main_tab_name_my">我的</string>
+
+    <!--抢红包功能标签-->
+    <string name="model_qianghongbao_tab_wechat">微信抢红包</string>
+    <string name="model_qianghongbao_tab_qq">qq抢红包</string>
+
+</resources>
