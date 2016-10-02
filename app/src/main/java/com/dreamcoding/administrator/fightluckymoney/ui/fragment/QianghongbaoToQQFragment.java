@@ -3,12 +3,12 @@ package com.dreamcoding.administrator.fightluckymoney.ui.fragment;
 import android.view.View;
 
 import com.dreamcoding.administrator.fightluckymoney.R;
-import com.dreamcoding.administrator.fightluckymoney.base.BaseFragment;
+import com.dreamcoding.administrator.fightluckymoney.base.BasePreferenceFragment;
 
 /**
  * Created by Administrator on 2016/9/24 0024 下午 10:03.
  */
-public class QianghongbaoToQQFragment extends BaseFragment {
+public class QianghongbaoToQQFragment extends BasePreferenceFragment {
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_qianghongbao_qq;

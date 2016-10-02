@@ -26,4 +26,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
+    compile 'cn.kongnannan:preferencefragment:1.1@aar'
 }

@@ -1,13 +1,21 @@
 package com.dreamcoding.administrator.fightluckymoney.base;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.dreamcoding.administrator.fightluckymoney.R;
+import com.dreamcoding.administrator.fightluckymoney.ui.activity.NotifySettingsActivity;
+import com.dreamcoding.administrator.fightluckymoney.ui.fragment.NotifySettingsFragment;
 
 /**
  * Created by Administrator on 2016/9/22 0022 下午 4:56.
@@ -82,5 +90,6 @@ public class Global {
         public static View inflate(int resource, ViewGroup parent) {
             return LayoutInflater.from(mContext).inflate(resource, parent, false);
         }
+
 
 }

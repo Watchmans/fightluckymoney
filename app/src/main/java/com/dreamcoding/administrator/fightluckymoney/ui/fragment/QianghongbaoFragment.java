@@ -1,13 +1,14 @@
 package com.dreamcoding.administrator.fightluckymoney.ui.fragment;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dreamcoding.administrator.fightluckymoney.R;
 import com.dreamcoding.administrator.fightluckymoney.base.BaseFragment;
+import com.dreamcoding.administrator.fightluckymoney.base.BasePreferenceFragment;
 import com.dreamcoding.administrator.fightluckymoney.base.Global;
 import com.dreamcoding.administrator.fightluckymoney.ui.adapter.QianghongbaoAdapter;
 import com.dreamcoding.administrator.fightluckymoney.ui.view.PagerSlidingTabStrip;
@@ -21,7 +22,7 @@ public class QianghongbaoFragment extends BaseFragment{
 
     private PagerSlidingTabStrip pagerSlidingTabStrip;
     private ViewPager vp_qianghongbao;
-    private ArrayList<BaseFragment> fragments;
+    private ArrayList<Fragment> fragments;
     private QianghongbaoAdapter qianghongbaoAdapter;
 
     @Override
