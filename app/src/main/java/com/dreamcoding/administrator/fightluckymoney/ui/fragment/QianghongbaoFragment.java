@@ -32,7 +32,7 @@ public class QianghongbaoFragment extends BaseFragment{
 
     @Override
     public void initView() {
-        pagerSlidingTabStrip = findView(R.id.page_tabs);
+        pagerSlidingTabStrip = findView(R.id.page_tabs );
         vp_qianghongbao = findView(R.id.vp_qianghongbao);
 
         //初始化Fragment

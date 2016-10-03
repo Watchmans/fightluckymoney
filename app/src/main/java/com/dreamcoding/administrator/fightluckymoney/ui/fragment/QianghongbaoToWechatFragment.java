@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.preference.Preference;
 import android.support.v4.preference.SwitchPreference;
@@ -27,114 +28,94 @@ import com.dreamcoding.administrator.fightluckymoney.service.QiangHongBaoService
 import com.dreamcoding.administrator.fightluckymoney.ui.activity.NotifySettingsActivity;
 import com.dreamcoding.administrator.fightluckymoney.ui.activity.WechatSettingsActivity;
 import com.dreamcoding.administrator.fightluckymoney.util.BitmapUtils;
-
 import java.io.File;
 
 /**
  * Created by Administrator on 2016/9/24 0024 下午 10:03.
  */
-public class QianghongbaoToWechatFragment extends BasePreferenceFragment {
+public class QianghongbaoToWechatFragment extends BasePreferenceFragment{
     private SwitchPreference notificationPref;
     private Dialog mTipsDialog;
     private boolean notificationChangeByUser = true;
-    private Preference wechatPref;
-    private Preference followMePref;
-    private Preference donateMepref;
 
     @Override
-    public int getLayoutRes() {
-        return R.xml.qianghongbao_wechat;
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.qianghongbao_wechat);
 
-    @Override
-    public void initView() {
         //微信红包开关
-        wechatPref = findPreference(QianghongbaoWechatConfig.KEY_ENABLE_WECHAT);
+        Preference wechatPref = findPreference(QianghongbaoWechatConfig.KEY_ENABLE_WECHAT);
+        wechatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if((Boolean) newValue && !QiangHongBaoService.isRunning()) {
+                    showOpenAccessibilityServiceDialog();
+                }
+                return true;
+            }
+        });
 
         notificationPref = (SwitchPreference) findPreference("KEY_NOTIFICATION_SERVICE_TEMP_ENABLE");
+        notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    Toast.makeText(getActivity(), "该功能只支持安卓4.3以上的系统", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
 
-        followMePref = findPreference("KEY_FOLLOW_ME");
-
-        donateMepref = findPreference("KEY_DONATE_ME");
-
-
-        Log.d("---","wechatPref="+wechatPref);
-        Log.d("---","notificationPref="+notificationPref);
-        Log.d("---","followMePref="+followMePref);
-        Log.d("---","donateMepref="+donateMepref);
-    }
-
-    @Override
-    public void initListener() {
-        /*if(wechatPref!=null){
-            wechatPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if ((Boolean) newValue && !QiangHongBaoService.isRunning()) {
-                        showOpenAccessibilityServiceDialog();
-                    }
+                if(!notificationChangeByUser) {
+                    notificationChangeByUser = true;
                     return true;
                 }
-            });
-        }
 
-        if(notificationPref!=null){
-            notificationPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                        Toast.makeText(getActivity(), "该功能只支持安卓4.3以上的系统", Toast.LENGTH_SHORT).show();
-                        return false;
-                    }
+                boolean enalbe = (boolean) newValue;
 
-                    if (!notificationChangeByUser) {
-                        notificationChangeByUser = true;
-                        return true;
-                    }
+                QianghongbaoWechatConfig.getConfig(getActivity()).setNotificationServiceEnable(enalbe);
 
-                    boolean enalbe = (boolean) newValue;
-
-                    QianghongbaoWechatConfig.getConfig(mActivity).setNotificationServiceEnable(enalbe);
-
-                    if (enalbe && !QiangHongBaoService.isNotificationServiceRunning()) {
-                        openNotificationServiceSettings();
-                        return false;
-                    }
-                    MyApplication.eventStatistics(mActivity, "notify_service", String.valueOf(newValue));
-                    return true;
+                if(enalbe && !QiangHongBaoService.isNotificationServiceRunning()) {
+                    openNotificationServiceSettings();
+                    return false;
                 }
-            });
-        }
+                MyApplication.eventStatistics(getActivity(), "notify_service", String.valueOf(newValue));
+                return true;
+            }
+        });
 
-
-        if(followMePref != null) {
-            followMePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        Preference preference = findPreference("KEY_FOLLOW_ME");
+        if(preference != null) {
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     showQrDialog();
-                    MyApplication.eventStatistics(mActivity, "about_author");
+                    MyApplication.eventStatistics(getActivity(), "about_author");
                     return true;
                 }
+
             });
         }
 
-        if(donateMepref != null) {
-            donateMepref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        preference = findPreference("KEY_DONATE_ME");
+        if(preference != null) {
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     showDonateDialog();
-                    MyApplication.eventStatistics(mActivity, "donate");
+                    MyApplication.eventStatistics(getActivity(), "donate");
                     return true;
                 }
+
             });
         }
 
-        findPreference("WECHAT_SETTINGS").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        findPreference("WECHAT_SETTINGS").setOnPreferenceClickListener(new Preference
+                .OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(getActivity(), WechatSettingsActivity.class));
                 return true;
             }
+
         });
 
         findPreference("NOTIFY_SETTINGS").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -143,19 +124,11 @@ public class QianghongbaoToWechatFragment extends BasePreferenceFragment {
                 startActivity(new Intent(getActivity(), NotifySettingsActivity.class));
                 return true;
             }
-        });*/
+
+        });
 
     }
 
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void onClick(View view, int id) {
-
-    }
 
 
     /** 显示未开启辅助服务的对话框*/
